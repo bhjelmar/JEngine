@@ -58,13 +58,12 @@
         </plugins>
     </build>
 
-
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <built.by>lwjglgamedev</built.by>
         <main.class>org.lwjglb.game.Main</main.class>
         <!-- Versions -->
-        <java.version>9</java.version>
+        <java.version>8</java.version>
         <mvn.complilerplug.version>3.7.0</mvn.complilerplug.version>
         <mvn.jarplug.version>3.0.2</mvn.jarplug.version>
         <lwjgl.version>3.1.6</lwjgl.version>
@@ -147,6 +146,15 @@
             <classifier>${native.target}</classifier>
             <scope>runtime</scope>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.0</version>
+            <scope>provided</scope>
+        </dependency>
+
     </dependencies>
 
 
