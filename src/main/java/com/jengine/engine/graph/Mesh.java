@@ -6,10 +6,9 @@ import org.lwjgl.system.MemoryUtil;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
-import static org.lwjgl.opengl.GL11.GL_FLOAT;
+import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL15.*;
-import static org.lwjgl.opengl.GL20.glDisableVertexAttribArray;
-import static org.lwjgl.opengl.GL20.glVertexAttribPointer;
+import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL30.*;
 
 public class Mesh {
@@ -65,6 +64,20 @@ public class Mesh {
 				MemoryUtil.memFree(indicesBuffer);
 			}
 		}
+	}
+
+	public void render() {
+		// Draw the mesh
+		glBindVertexArray(getVaoId());
+		glEnableVertexAttribArray(0);
+		glEnableVertexAttribArray(1);
+
+		glDrawElements(GL_TRIANGLES, getVertexCount(), GL_UNSIGNED_INT, 0);
+
+		// Restore state
+		glDisableVertexAttribArray(0);
+		glDisableVertexAttribArray(1);
+		glBindVertexArray(0);
 	}
 
 	public void cleanUp() {
