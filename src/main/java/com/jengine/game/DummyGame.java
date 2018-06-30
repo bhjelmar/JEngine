@@ -2,16 +2,17 @@ package com.jengine.game;
 
 import com.jengine.engine.IGameLogic;
 import com.jengine.engine.Window;
+import com.jengine.engine.graph.Mesh;
 
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_DOWN;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_UP;
-import static org.lwjgl.opengl.GL11.glViewport;
 
 public class DummyGame implements IGameLogic {
 
 	private int direction = 0;
 	private float color = 0.0f;
 	private final Renderer renderer;
+	private Mesh mesh;
 
 	public DummyGame() {
 		this.renderer = new Renderer();
@@ -20,6 +21,14 @@ public class DummyGame implements IGameLogic {
 	@Override
 	public void init() throws Exception {
 		renderer.init();
+		float[] positions = new float[] {
+				-0.5f, 0.5f, 0.0f,
+				-0.5f, -0.5f, 0.0f,
+				0.5f, -0.5f, 0.0f,
+				0.5f, 0.5f, 0.0f,};
+		int[] indices = new int[] {
+				0, 1, 3, 3, 1, 2,};
+		mesh = new Mesh(positions, indices);
 	}
 
 	@Override
@@ -46,11 +55,13 @@ public class DummyGame implements IGameLogic {
 
 	@Override
 	public void render(Window window) {
-		if(window.isResized()) {
-			glViewport(0, 0, window.getWidth(), window.getHeight());
-			window.setResized(false);
-		}
 		window.setClearColor(color, color, color, 0.0f);
-		renderer.clear();
+		renderer.render(window, mesh);
+	}
+
+	@Override
+	public void cleanup() {
+		renderer.cleanup();
+		mesh.cleanUp();
 	}
 }
